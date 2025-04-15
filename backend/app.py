@@ -1,3 +1,4 @@
+from ml_model import predict_stock
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from services import search_stock, get_stock_summary
@@ -21,3 +22,10 @@ def summary():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/predict", methods=["POST"])
+def predict():
+    data = request.get_json()
+    result = predict_stock(data)
+    return jsonify(result)
+    
