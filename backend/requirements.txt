@@ -4,3 +4,5 @@ requests
 xgboost
 pandas
 scikit-learn
+shap
+matplotlib
