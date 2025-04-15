@@ -1,3 +1,5 @@
+from flask import send_file
+from ml_model import generate_shap_plot
 from ml_model import predict_stock
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -29,3 +31,8 @@ def predict():
     result = predict_stock(data)
     return jsonify(result)
     
+@app.route("/shap-image", methods=["POST"])
+def shap_image():
+    data = request.get_json()
+    path = generate_shap_plot(data)
+    return send_file(path, mimetype="image/png")
