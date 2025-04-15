@@ -43,3 +43,21 @@ def predict_stock(features):
     prediction = model.predict(X_input)[0]
     label = "Up" if prediction == 1 else "Down"
     return {"prediction": label, "accuracy": round(accuracy * 100, 2)}
+
+import shap
+import matplotlib.pyplot as plt
+import os
+
+shap.initjs()
+PLOT_PATH = "shap_plot.png"
+
+def generate_shap_plot(features):
+    X_input = pd.DataFrame([features])
+
+    explainer = shap.Explainer(model)
+    shap_values = explainer(X_input)
+
+    plt.clf()
+    shap.plots.waterfall(shap_values[0], show=False)
+    plt.savefig(PLOT_PATH)
+    return PLOT_PATH
